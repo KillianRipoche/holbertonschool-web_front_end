@@ -1,0 +1,17 @@
+/* task 2 */
+$main-color: #3D3D3D;
+$second-color: #6D6D6D;
+
+body {
+	color: $main-color;
+	background-color: $second-color;
+}
+
+p {
+	color: $main-color;
+}
+
+h2 {
+	background-color: $second-color;
+}
+
