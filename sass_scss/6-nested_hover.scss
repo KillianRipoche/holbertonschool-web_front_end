@@ -1,0 +1,11 @@
+/* task 6 */
+$text-color-green: #00FF00;
+$text-color-red: #FF0000;
+
+button {
+	color: $text-color-red;
+
+	&:hover {
+		color: $text-color-green;
+	}
+}

@@ -1,0 +1,11 @@
+/* task 5 */
+$text-color-grey: #3D3D3D;
+$text-color-red: #FF0000;
+
+body {
+	color: $text-color-grey;
+
+	> .red {
+		color: $text-color-red;
+	}
+}
