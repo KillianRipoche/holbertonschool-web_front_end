@@ -1,0 +1,17 @@
+/* task 9 */
+$text-color-red: #FF0000;
+$text-color-green: #00FF00;
+
+.info {
+  font-size: 12px;
+}
+
+.success {
+  @extend .info;
+  color: $text-color-green;
+}
+
+.warning {
+  @extend .info;
+  color: $text-color-red;
+}
