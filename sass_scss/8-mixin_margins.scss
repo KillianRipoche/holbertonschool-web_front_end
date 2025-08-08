@@ -1,0 +1,13 @@
+/* task 8 */
+@mixin theme($value) {
+  margin-left: $value;
+  margin-right: $value;
+}
+
+body {
+  @include theme(10px);
+}
+
+div {
+  @include theme(15px);
+}
