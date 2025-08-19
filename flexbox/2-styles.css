@@ -556,6 +556,10 @@ ul.row {
 	padding: 10rem 40rem 2rem 0;
 }
 
+/* Section Latest news
+   ============================= */
+
+/* Reverse the visual order of the Latest news cards only */
 .section-latest-news .row {
   flex-direction: row-reverse;
 }
