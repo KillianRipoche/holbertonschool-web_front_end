@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+  <meta charset="utf-8" />
+  <title>Task 1</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script type="application/javascript">
+    $(document).ready(function () {
+      function createSearchForm() {
+        $("body").append(
+          $("<form>").append(
+            $("<input type='text'>"),
+            $("<input type='submit' value='Submit'>")
+              .click(function (event) {
+                event.preventDefault();
+                const text = $("input").val();
+                queryWikipedia(text);
+              }),
+            $("<ul>"),
+            $("<ul id='pagination'>")
+          )
+        );
+      }
+      function addNewArticle(id, title, snippet) {
+        $("ul").append(
+          $("<li>").append(
+            $("<p>").html(`<span>${id} - <b>${title}</b></span>`),
+            $("<p>").html(snippet)
+          )
+        );
+      }
+      function queryWikipedia(search, offset = 0) {
+        const url = "https://en.wikipedia.org/w/api.php";
+        const data = {
+          action: "query",
+          list: "search",
+          sroffset: offset,
+          srsearch: search,
+          format: "json",
+          origin: "*" // To avoid CORS problems
+        };
+        $.ajax({
+          url: url,
+          dataType: "json",
+          data: data,
+        })
+          .done(function (response) {
+            if (response.query && response.query.search) {
+              $("ul:first").empty();
+              response.query.search.forEach(article => {
+                addNewArticle(article.pageid, article.title, article.snippet);
+              })
+            }
+            const totalH = response.query.searchinfo.totalhits;
+            buildPagination(totalH, 10, offset);
+          })
+          .fail(function (error) {
+            console.error("The request ended in failure ->" + error);
+          })
+      }
+      function buildPagination(numberOfItems, itemsPerPage, currentOffset) {
+        const totalPages = Math.ceil(numberOfItems / itemsPerPage);
+        const currentPage = Math.floor(currentOffset / itemsPerPage) + 1;
+
+        $("#pagination").empty();
+
+        for (let i = 1; i <= totalPages; i++) {
+          const offset = (i - 1) * itemsPerPage;
+          const pageItems = $("<li>")
+            .text(i)
+            .css({ cursor: "pointer", display: 'inline', marginLeft: "10px", fontWeight: i === currentPage ? 'bold' : 'normal' })
+            .click(function () {
+              const search = $("input").val();
+              queryWikipedia(search, offset);
+            });
+          $("#pagination").append(pageItems);
+        }
+      }
+      createSearchForm();
+    });
+  </script>
+</head>
+
+<body>
+  <script type="application/javascript">
+    $(document).createTextElement()
+  </script>
+</body>
+
+</html>
